@@ -706,10 +706,15 @@ impl<'a, T> Window<T> {
 
         if frame_event_info.new_window_size.is_some() || frame_event_info.new_dpi_factor.is_some() {
             #[cfg(target_os = "linux")] {
-                self.state.size.hidpi_factor = linux_get_hidpi_factor(
-                    &self.display.gl_window().window().get_current_monitor(),
-                    events_loop
-                );
+                use glium::glutin::os::unix::EventsLoopExt;
+                if events_loop.is_wayland() {
+                    self.state.size.hidpi_factor = self.display.gl_window().window().get_hidpi_factor();
+                } else {
+                    self.state.size.hidpi_factor = linux_get_hidpi_factor(
+                        &self.display.gl_window().window().get_current_monitor(),
+                        events_loop
+                    );
+                }
             }
         }
 
@@ -821,13 +826,20 @@ impl Drop for FakeDisplay {
 /// Returns the actual hidpi factor and the winit DPI factor for the current window
 #[allow(unused_variables)]
 fn get_hidpi_factor(window: &GliumWindow, events_loop: &EventsLoop) -> (f64, f64) {
-    let monitor = window.get_current_monitor();
-    let winit_hidpi_factor = monitor.get_hidpi_factor();
-
     #[cfg(target_os = "linux")] {
-        (linux_get_hidpi_factor(&monitor, &events_loop), winit_hidpi_factor)
+        use glium::glutin::os::unix::EventsLoopExt;
+        if events_loop.is_wayland() {
+            let winit_hidpi_factor = window.get_hidpi_factor();
+            (winit_hidpi_factor, winit_hidpi_factor)
+        } else {
+            let monitor = window.get_current_monitor();
+            let winit_hidpi_factor = monitor.get_hidpi_factor();
+            (linux_get_hidpi_factor(&monitor, &events_loop), winit_hidpi_factor)
+        }
     }
     #[cfg(not(target_os = "linux"))] {
+        let monitor = window.get_current_monitor();
+        let winit_hidpi_factor = monitor.get_hidpi_factor();
         (winit_hidpi_factor, winit_hidpi_factor)
     }
 }
@@ -1010,7 +1022,6 @@ fn get_xft_dpi() -> Option<f64>{
 /// Return the DPI on X11 systems
 #[cfg(target_os = "linux")]
 fn linux_get_hidpi_factor(monitor: &MonitorId, events_loop: &EventsLoop) -> f64 {
-
     use std::env;
     use std::process::Command;
     use glium::glutin::os::unix::EventsLoopExt;

@@ -403,11 +403,7 @@ impl<T> App<T> {
             let mut frame_was_resize = false;
             let mut events = Vec::new();
 
-            self.app_state.resources.fake_display.hidden_events_loop.poll_events(|e| match e {
-                // Filter out all events that are uninteresting or unnecessary
-                Event::WindowEvent { event: WindowEvent::Refresh, .. } => { },
-                _ => { events.push(e); },
-            });
+            self.app_state.resources.fake_display.hidden_events_loop.poll_events(|e| events.push(e));
 
             // let current_desktop_events = get_desktop_events(window, &events);
 
