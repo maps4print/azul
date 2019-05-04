@@ -121,13 +121,19 @@ impl<T> Timer<T> {
             }
         }
 
-        if let Some(interval) = self.interval {
-            let last_run = match self.last_run {
-                Some(s) => s,
-                None => self.created + delay,
-            };
-            if instant_now - last_run < interval {
-                return (DontRedraw, TerminateTimer::Continue);
+        match self.last_run {
+            Some(last_run) => {
+                if let Some(interval) = self.interval {
+                    if instant_now - last_run < interval {
+                        return (DontRedraw, TerminateTimer::Continue);
+                    }
+                }
+
+            }
+            None => {
+                if instant_now < self.created + delay {
+                    return (DontRedraw, TerminateTimer::Continue);
+                }
             }
         }
 
