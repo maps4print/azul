@@ -21,4 +21,4 @@ unicode-normalization   = { version = "0.1.12",  default-features = false }
 allsorts_no_std         = { version = "0.5.2", default-features = false }
 tinyvec                 = { version = "1.1.0", default-features = false }
 rayon                   = { version = "1.5.1", default-features = false }
-ttf-parser              = { version = "0.11.0", default-features = false, features = ["variable-fonts"] }
+ttf-parser              = { version = "0.12.3", default-features = false, features = ["variable-fonts"] }
