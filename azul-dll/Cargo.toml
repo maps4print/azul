@@ -44,7 +44,7 @@ rpath = false
 azul-core = { path = "../azul-core", version = "0.0.2", default-features = false }
 pyo3 = { git = "https://github.com/PyO3/pyo3", rev = "1ae3d8797315419e9843b7922a7a658b01dfe52a", default-features = false, features = ["abi3", "multiple-pymethods", "extension-module", "macros", "auto-initialize"], optional = true }
 log  = { version = "0.4.8",  default-features = false, optional = true }
-pyo3-log = { version = "0.3.1", default-features = false, optional = true }
+pyo3-log = { version = "0.4.0", default-features = false, optional = true }
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 azul-desktop = { path = "../azul-desktop", version = "0.0.5", default-features = false }
