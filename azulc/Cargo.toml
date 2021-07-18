@@ -46,7 +46,7 @@ rust-fontconfig         = { version = "0.1.5",           default-features = fals
 lyon                    = { version = "0.17.5",  default-features = false, optional = true }
 rayon                   = { version = "1.5.1",   default-features = false, optional = true }
 usvg                    = { version = "0.14.0",  default-features = false, optional = true }
-resvg                   = { version = "0.14.0",  default-features = false, optional = true }
+resvg                   = { version = "0.15.0",  default-features = false, optional = true }
 roxmltree               = { version = "0.14.0",  default-features = false, optional = true }
 tiny-skia               = { version = "0.5.1",   default-features = false, optional = true, features = ["libm"] }
 
