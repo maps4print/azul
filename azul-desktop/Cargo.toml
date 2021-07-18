@@ -23,7 +23,7 @@ azul-text-layout        = { path = "../azul-text-layout", version = "0.0.5", def
 azul-css-parser         = { path = "../azul-css-parser", version = "0.0.1",  default-features = false, optional = true }
 log                     = { version = "0.4.8",  default-features = false, optional = true }
 fern                    = { version = "0.5.7",  default-features = false, optional = true }
-backtrace               = { version = "0.3.43" }
+backtrace               = { version = "0.3.60" }
 rust-fontconfig         = { version = "0.1.5", default-features = false, features = ["std"] }
 strfmt                  = { version = "0.1.6", default-features = false }
 libm                    = { version = "0.2.1", default-features = false }
